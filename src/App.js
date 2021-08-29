@@ -7,6 +7,8 @@ import Account from "./components/Account";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import NavBar from './components/NavBar'
+import Dentists from "./components/Dentists";
+import Clinics from "./components/Clinics";
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
         <NavBar></NavBar>
         <Switch>
           <Route exact path='/' component={Content}/>
+          <Route path='/dentists' component={Dentists}/>
+          <Route path='/clinics' component={Clinics}/>
           <Route path='/signup' component={Signup}/>
           <Route path='/login' component={Login}/>
           <Route path='/forgot-password' component={ForgotPassword}/>
