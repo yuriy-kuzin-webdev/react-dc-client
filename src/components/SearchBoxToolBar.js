@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField'
+import { useHistory } from 'react-router'
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SearchBoxToolBar() {
+    const history = useHistory()
     const classes = useStyles()
     const [searchBy, setSearchBy] = useState("Dentist")
     const [searchText, setSearchText] = useState('');
@@ -65,7 +67,7 @@ export default function SearchBoxToolBar() {
         console.log(searchText)
     }
     async function handleSearchClick() {
-        console.log('click');
+        history.push(`/${searchBy.toLowerCase()}s`)
     }
     return (
         <Grid container spacing={2} className={classes.grid} justifyContent='center'>
