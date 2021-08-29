@@ -6,12 +6,14 @@ import Login from "./components/Login";
 import Account from "./components/Account";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
+import NavBar from './components/NavBar'
 
 
 function App() {
   return (
     <Router>
       <AuthProvider>
+        <NavBar></NavBar>
         <Switch>
           <Route exact path='/' component={Content}/>
           <Route path='/signup' component={Signup}/>

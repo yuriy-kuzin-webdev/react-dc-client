@@ -52,7 +52,7 @@ export default function Login() {
             setError('')
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
-            history.push('/account')
+            history.push('/')
         } catch (error) {
             setError('Failed to log in')
         }

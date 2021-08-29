@@ -10,7 +10,7 @@ export default function Account() {
         setError('')
         try {
             await logout()
-            history.push('/login')
+            history.push('/')
         } catch (error) {
             setError('Failed to logout')
         }
