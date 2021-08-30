@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Box, Grid, Typography } from '@material-ui/core';
 import Dentist from './Dentist';
 
-const FAKE_DENTISTS = [
+export const FAKE_DENTISTS = [
     {
         id: 1,
         type: "Dentist",

@@ -9,6 +9,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import NavBar from './components/NavBar'
 import Dentists from "./components/Dentists";
 import Clinics from "./components/Clinics";
+import Appointment from "./components/Appointment";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route exact path='/' component={Content}/>
           <Route path='/dentists' component={Dentists}/>
           <Route path='/clinics' component={Clinics}/>
+          <Route path="/appointment" component={Appointment}/>
           <Route path='/signup' component={Signup}/>
           <Route path='/login' component={Login}/>
           <Route path='/forgot-password' component={ForgotPassword}/>
