@@ -11,6 +11,12 @@ const DcContext = createContext({
 
   addClient: (client) => {},
   updClient: (client) => {},
+
+  selectedClinic: {},
+  selectedDentist: {},
+
+  selectClinic: (clinic) => {},
+  selectDentist: (dentist) => {},
 });
 
 export function DcContextProvider(props) {
@@ -20,6 +26,8 @@ export function DcContextProvider(props) {
   const [userClients, setUserClients] = useState([]);
   const [userClinics, setUserClinics] = useState([]);
   const [userDentists, setUserDentists] = useState([]);
+  const [userSelectedClinic, setUserSelectedClinic] = useState({});
+  const [userSelectedDentist, setUserSelectedDentist] = useState({});
 
   useEffect(() => {
     async function fetchClinics() {
@@ -114,6 +122,13 @@ export function DcContextProvider(props) {
     });
   }
 
+  function selectClinicHandler(clinic) {
+    setUserSelectedClinic(clinic);
+  }
+  function selectDentistHandler(dentist) {
+    setUserSelectedDentist(dentist);
+  }
+
   const context = {
     appointments: userAppointments,
     clients: userClients,
@@ -124,7 +139,13 @@ export function DcContextProvider(props) {
     updAppointment: updAppointmentHandler,
 
     addClient: addClientHandler,
-    updClient: updClientHandler
+    updClient: updClientHandler,
+
+    selectedClinic: userSelectedClinic,
+    selectedDentist: userSelectedDentist,
+
+    selectClinic: selectClinicHandler,
+    selectDentist: selectDentistHandler,
   };
 
   return (
