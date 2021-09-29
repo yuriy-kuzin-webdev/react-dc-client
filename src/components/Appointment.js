@@ -6,7 +6,8 @@ import { Box, Grid, Paper, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
+        width: '100%'
     },
     paper: {
         padding: theme.spacing(2),
@@ -39,6 +40,9 @@ export default function Appointment() {
         return getDates(new Date(), new Date().addDays(30))
     }
     const dates = generateDays()
+    function handleDateClick(){
+
+    }
     return (
         <div className={classes.root}>
             <Box m={2} className={classes.root}>
@@ -51,7 +55,7 @@ export default function Appointment() {
                 <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
                     {dates.slice(0, 7).map(day => {
                         return (
-                            <Grid item xs={1}>
+                            <Grid item xs={1} key={'h' + day.toLocaleDateString("en-US", options)}>
                                 <Paper className={classes.paper}>{days[day.getDay()]}</Paper>
                             </Grid>
                         )
@@ -62,8 +66,8 @@ export default function Appointment() {
                 <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
                     {dates.slice(0, 7).map(day => {
                         return (
-                            <Grid item xs={1}>
-                                <Button variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
+                            <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
+                                <Button onClick={handleDateClick} variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
                             </Grid>
                         )
                     })}
@@ -73,8 +77,8 @@ export default function Appointment() {
                 <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
                     {dates.slice(7, 14).map(day => {
                         return (
-                            <Grid item xs={1}>
-                                <Button variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
+                            <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
+                                <Button onClick={handleDateClick} variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
                             </Grid>
                         )
                     })}
@@ -84,8 +88,8 @@ export default function Appointment() {
                 <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
                     {dates.slice(14, 21).map(day => {
                         return (
-                            <Grid item xs={1}>
-                                <Button variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
+                            <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
+                                <Button onClick={handleDateClick} variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
                             </Grid>
                         )
                     })}
@@ -95,8 +99,8 @@ export default function Appointment() {
                 <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
                     {dates.slice(21, 28).map(day => {
                         return (
-                            <Grid item xs={1}>
-                                <Button variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
+                            <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
+                                <Button onClick={handleDateClick} variant="contained" color="primary">{day.toLocaleDateString("en-US", options)}</Button>
                             </Grid>
                         )
                     })}
