@@ -72,7 +72,7 @@ export default function Dentist({ dentist }) {
               {dentist.name}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {dentist.clinic_name}
+              {dentist.clinicName}
             </Typography>
           </CardContent>
           <div className={classes.controls}>
