@@ -45,9 +45,15 @@ export default function Dentists() {
           justifyContent="space-between"
           alignItems="center"
         >
-          {context.dentists.map((dentist) => {
-            return <Dentist key={dentist.id} dentist={dentist} />;
-          })}
+          {context.selectedClinic && context.selectedClinic.id
+            ? context.dentists.filter(
+                (dentist) => dentist.clinicId === context.selectedClinic.id
+              ).map((dentist) => {
+                return <Dentist key={dentist.id} dentist={dentist} />;
+              })
+            : context.dentists.map((dentist) => {
+                return <Dentist key={dentist.id} dentist={dentist} />;
+              })}
         </Grid>
       </Box>
     </div>
