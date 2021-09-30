@@ -10,6 +10,7 @@ import NavBar from './components/NavBar'
 import Dentists from "./components/Dentists";
 import Clinics from "./components/Clinics";
 import Appointment from "./components/Appointment";
+import Appointments from "./components/Appointments";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path='/login' component={Login}/>
           <Route path='/forgot-password' component={ForgotPassword}/>
           <PrivateRoute path='/account' component={Account}/>
+          <PrivateRoute path='/appointments' component={Appointments}/>
         </Switch>
       </AuthProvider>
     </Router>

@@ -64,6 +64,7 @@ export default function Appointment() {
           clientId: client.id,
           status: 'pending'
         });
+        history.replace('/appointments');
       } else {
         history.replace("/account");
       }
