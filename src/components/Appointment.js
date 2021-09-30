@@ -3,6 +3,8 @@ import Dentist from "./Dentist";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Grid, Paper, Button } from "@material-ui/core";
 import DcContext from "../contexts/dc-context";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +30,8 @@ const options = { year: "numeric", month: "long", day: "numeric" };
 
 export default function Appointment() {
   const context = useContext(DcContext);
+  const { currentUser } = useAuth();
+  const history = useHistory();
   const classes = useStyles();
   function generateDays() {
     // eslint-disable-next-line
@@ -38,6 +42,7 @@ export default function Appointment() {
     };
 
     function getDates(startDate, stopDate) {
+      startDate.setHours(0, 0, 0, 0);
       var dateArray = [];
       var currentDate = startDate;
       while (currentDate <= stopDate) {
@@ -49,7 +54,23 @@ export default function Appointment() {
     return getDates(new Date(), new Date().addDays(30));
   }
   const dates = generateDays();
-  function handleDateClick() {}
+  function handleDateClick(date) {
+    if (currentUser) {
+      const client = context.clients.find((c) => c.email === currentUser.email);
+      if (client) {
+        context.addAppointment({
+          dentistId: context.selectedDentist.id,
+          date: date.toISOString(),
+          clientId: client.id,
+          status: 'pending'
+        });
+      } else {
+        history.replace("/account");
+      }
+    } else {
+      history.replace("/signup");
+    }
+  }
   function renderDatesRow(datesRow) {
     return (
       <Box m={2} className={classes.root}>
@@ -64,7 +85,9 @@ export default function Appointment() {
             return (
               <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
                 <Button
-                  onClick={handleDateClick}
+                  onClick={() => {
+                    handleDateClick(day);
+                  }}
                   variant="contained"
                   color="primary"
                 >
