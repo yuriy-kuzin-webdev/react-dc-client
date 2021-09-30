@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         cursor: 'pointer'
     },
+    appointments: {
+        cursor: 'pointer'
+    }
 }));
 
 export default function NavBar() {
@@ -33,12 +36,16 @@ export default function NavBar() {
     function handleTitleClick() {
         history.push('/')
     }
+    function handleAppointmentsClick() {
+        history.replace('/appointments');
+    }
 
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title} onClick={handleTitleClick}>Find the best dentist in your city</Typography>
+                    {currentUser && <Typography className={classes.appointments} onClick={handleAppointmentsClick}>My Appointments</Typography>}
                     <IconButton
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
