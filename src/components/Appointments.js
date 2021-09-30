@@ -30,6 +30,7 @@ export default function Appointments() {
   const client = context.clients.find((c) => c.email === currentUser.email);
   if (!client) {
     history.replace("/account");
+    return null;
   }
 
   function getDentist(id) {
