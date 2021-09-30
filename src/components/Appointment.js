@@ -50,6 +50,33 @@ export default function Appointment() {
   }
   const dates = generateDays();
   function handleDateClick() {}
+  function renderDatesRow(datesRow) {
+    return (
+      <Box m={2} className={classes.root}>
+        <Grid
+          container
+          spacing={3}
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {datesRow.map((day) => {
+            return (
+              <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
+                <Button
+                  onClick={handleDateClick}
+                  variant="contained"
+                  color="primary"
+                >
+                  {day.toLocaleDateString("en-US", options)}
+                </Button>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+    );
+  }
   return (
     <div className={classes.root}>
       <Box m={2} className={classes.root}>
@@ -86,98 +113,10 @@ export default function Appointment() {
           })}
         </Grid>
       </Box>
-      <Box m={2} className={classes.root}>
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          {dates.slice(0, 7).map((day) => {
-            return (
-              <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
-                <Button
-                  onClick={handleDateClick}
-                  variant="contained"
-                  color="primary"
-                >
-                  {day.toLocaleDateString("en-US", options)}
-                </Button>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
-      <Box m={2} className={classes.root}>
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          {dates.slice(7, 14).map((day) => {
-            return (
-              <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
-                <Button
-                  onClick={handleDateClick}
-                  variant="contained"
-                  color="primary"
-                >
-                  {day.toLocaleDateString("en-US", options)}
-                </Button>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
-      <Box m={2} className={classes.root}>
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          {dates.slice(14, 21).map((day) => {
-            return (
-              <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
-                <Button
-                  onClick={handleDateClick}
-                  variant="contained"
-                  color="primary"
-                >
-                  {day.toLocaleDateString("en-US", options)}
-                </Button>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
-      <Box m={2} className={classes.root}>
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          {dates.slice(21, 28).map((day) => {
-            return (
-              <Grid item xs={1} key={day.toLocaleDateString("en-US", options)}>
-                <Button
-                  onClick={handleDateClick}
-                  variant="contained"
-                  color="primary"
-                >
-                  {day.toLocaleDateString("en-US", options)}
-                </Button>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
+      {renderDatesRow(dates.slice(0, 7))}
+      {renderDatesRow(dates.slice(7, 14))}
+      {renderDatesRow(dates.slice(14, 21))}
+      {renderDatesRow(dates.slice(21, 28))}
     </div>
   );
 }
