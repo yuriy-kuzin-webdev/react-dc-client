@@ -37,6 +37,8 @@ const DcContext = createContext({
 export function DcContextProvider(props) {
   const api = "http://localhost:31437/api/";
 
+  const [userSelectedClinic, setUserSelectedClinic] = useState({});
+  const [userSelectedDentist, setUserSelectedDentist] = useState({});
   const [langCode, setLangCode] = useState(0);
   const [userAppointments, setUserAppointments] = useState([]);
   const [userClients, setUserClients] = useState([]);
@@ -62,10 +64,6 @@ export function DcContextProvider(props) {
     fetchData(setUserDentistInformations, "dentistinfoes");
     fetchData(setUserDentistReviews, "dentistreviews");
   }, []);
-
-  function changeLanguageHandler(code) {
-    setUserLanguage(code);
-  }
 
   function addData(data, controllerName, setStateCallback) {
     fetch(api + controllerName, {
@@ -98,6 +96,19 @@ export function DcContextProvider(props) {
         });
       });
     });
+  }
+  function delData(dataId, controllerName, setStateCallback) {
+    fetch(api + controllerName + "/" + dataId, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        setStateCallback((prev) => {
+          return prev.filter((data) => data[Object.keys(data)[0]] !== dataId);
+        });
+      });
   }
 
   function selectClinicHandler(clinic) {
