@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import NativeSelect from '@material-ui/core/NativeSelect'
@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl'
 import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField'
 import { useHistory } from 'react-router'
+import DcContext from '../contexts/dc-context';
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -17,7 +18,7 @@ const BootstrapInput = withStyles((theme) => ({
     input: {
         borderRadius: 4,
         position: 'relative',
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: 'theme.palette.background.paper',
         border: '1px solid #ced4da',
         fontSize: 16,
         padding: '10px 26px 10px 12px',
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SearchBoxToolBar() {
+    const context = useContext(DcContext);
     const history = useHistory()
     const classes = useStyles()
     const [searchBy, setSearchBy] = useState("Dentist")
@@ -79,16 +81,16 @@ export default function SearchBoxToolBar() {
                         onChange={handleChange}
                         input={<BootstrapInput />}
                     >
-                        <option value={"Dentist"}>Dentist</option>
-                        <option value={"Clinic"}>Clinic</option>
+                        <option value={"Dentist"}>{["Dentist","Стоматолог","Стоматолог"][context.languageCode]}</option>
+                        <option value={"Clinic"}>{["Clinic","Клиника","Клiнiка"][context.languageCode]}</option>
                     </NativeSelect>
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3}>
-                <FormControl className={classes.width}>
+                <FormControl className={classes.width} style={{backgroundColor: 'white'}}>
                     <TextField
                         className={classes.width}
-                        label={searchBy === "Dentist" ? "Name of dentist" : "Name of clinic"}
+                        label={searchBy === "Dentist" ? ["Name of dentist","Имя стоматолога","Iм'я стоматолога"][context.languageCode] : ["Name of clinic","Название клиники","Назва клiнiки"][context.languageCode]}
                         variant="outlined"
                         size="small"
                         value={searchText}
@@ -98,7 +100,7 @@ export default function SearchBoxToolBar() {
             </Grid>
             <Grid item xs={12} sm={12} md={2} lg={2}>
                 <FormControl className={classes.width}>
-                    <Button variant="contained" color="primary" onClick={handleSearchClick}>Search</Button>
+                    <Button variant="contained" color="primary" onClick={handleSearchClick}>{["Search","Поиск","Пошук"][context.languageCode]}</Button>
                 </FormControl>
             </Grid>
         </Grid>
