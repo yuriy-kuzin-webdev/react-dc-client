@@ -33,14 +33,29 @@ export default function Appointments() {
     return null;
   }
 
-  function getDentist(id) {
-    return context.dentists.find((dent) => dent.id === id);
+  function getDentistName(id) {
+    const dentist = context.dentists.find((dent) => dent.id === id);
+    const propName = ["name","nameRu","nameUa"][context.languageCode];
+    return dentist[propName];
+  }
+  function getClinicName(id) {
+    const clinic = context.clinics.find((cl)=> cl.id === id);
+    const propName = ["title","titleRu","titleUa"][context.languageCode];
+    return clinic[propName];
+  }
+  function getStatusName(statusCode) {
+    const statusLocales = [
+      ["Pending","Confirmed","Canceled"],
+      ["Ожидает рассмотрения","Подтверждено","Отменено"],
+      ["Очікує на розгляд", "Підтверджено", "Скасовано"]
+    ]
+    return statusLocales[context.languageCode][statusCode];
   }
   function handleRestoreClick(row){
-      context.updAppointment({...row, status:'pending'})
+      context.updAppointment({...row, status:0})
   }
   function handleCancelClick(row){
-    context.updAppointment({...row, status:'canceled'})
+    context.updAppointment({...row, status:2})
   }
   return (
     <TableContainer component={Paper} className={classes.tableCenter}>
@@ -48,17 +63,17 @@ export default function Appointments() {
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
-            <TableCell align="right">Clinic</TableCell>
-            <TableCell align="right">Dentist</TableCell>
-            <TableCell align="right">Status</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell align="right">{["Clinic","Клиника","Клiнiка"][context.languageCode]}</TableCell>
+            <TableCell align="right">{["Dentist","Стоматолог","Стоматолог"][context.languageCode]}</TableCell>
+            <TableCell align="right">{["Status","Статус","Статус"][context.languageCode]}</TableCell>
+            <TableCell align="right">{["Actions","Действия","Дії"][context.languageCode]}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {context.appointments
             .filter((a) => a.clientId === client.id)
             .map((row) => (
-              <TableRow
+              <TableRow style={{backgroundColor: ["#9ACD32","#90EE90","#FFB6C1"][row.status]}}
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
@@ -70,12 +85,12 @@ export default function Appointments() {
                   })}
                 </TableCell>
                 <TableCell align="right">
-                  {getDentist(row.dentistId).clinicName}
+                  {getClinicName(row.clinicId)}
                 </TableCell>
                 <TableCell align="right">
-                  {getDentist(row.dentistId).name}
+                  {getDentistName(row.dentistId)}
                 </TableCell>
-                <TableCell align="right">{row.status}</TableCell>
+                <TableCell align="right">{getStatusName(row.status)}</TableCell>
                 <TableCell align="right">
                   <IconButton
                     aria-label="account of current user"
