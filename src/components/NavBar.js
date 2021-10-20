@@ -48,7 +48,7 @@ export default function NavBar() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar style={{backgroundColor: '#87CEEB'}}>
           <Typography
             variant="h6"
             className={classes.title}

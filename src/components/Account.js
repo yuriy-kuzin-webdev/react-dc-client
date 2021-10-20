@@ -94,7 +94,7 @@ export default function Account() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Profile info
+          {["Profile info","Персональная информация","Персональна інформація"][context.languageCode]}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
@@ -102,7 +102,7 @@ export default function Account() {
             margin="normal"
             required
             fullWidth
-            label="Full Name"
+            label={["Full Name","Полное имя","Повне ім'я"][context.languageCode]}
             inputRef={nameRef}
             defaultValue={clientName}
           />
@@ -111,7 +111,7 @@ export default function Account() {
             margin="normal"
             required
             fullWidth
-            label="Contact Phone"
+            label={["Contact phone","Контактный телефон","Контактний телефон"][context.languageCode]}
             inputRef={phoneRef}
             defaultValue={clientPhone}
           />
@@ -120,7 +120,7 @@ export default function Account() {
             margin="normal"
             disabled
             fullWidth
-            label="Email"
+            label={["Email","Электронная почта","Електронна пошта"][context.languageCode]}
             defaultValue={currentUser.email}
           />
           {error && (
@@ -137,7 +137,7 @@ export default function Account() {
             className={classes.submit}
             disabled={loading}
           >
-            Update info
+            {["Update info","Обновить информацию","Поновити Iнформацiю"][context.languageCode]}
           </Button>
         </form>
         <Box mt={1}>
@@ -149,7 +149,7 @@ export default function Account() {
             className={classes.submit}
             disabled={loading}
           >
-            Log out
+            {["Log out","Выйти","Вийти"][context.languageCode]}
           </Button>
         </Box>
       </div>
