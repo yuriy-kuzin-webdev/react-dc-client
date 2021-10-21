@@ -27,7 +27,7 @@ export default function Clinics() {
     <div className={classes.root}>
       <Box m={2}>
         <Typography component="h1" variant="h5" align="center">
-          Clinics in your city
+          {["Clinics in your city","Стоматологии в вашем городе","Стоматології вашого мiста "][context.languageCode]}
         </Typography>
       </Box>
       <Box m={2} className={classes.root}>
