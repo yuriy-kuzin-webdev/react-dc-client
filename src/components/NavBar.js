@@ -41,6 +41,12 @@ export default function NavBar() {
   function handleTitleClick() {
     history.push("/");
   }
+  function handleClinicsClick() {
+    history.replace("/clinics");
+  }
+  function handleDentistsClick() {
+    history.replace("/dentists");
+  }
   function handleAppointmentsClick() {
     history.replace("/appointments");
   }
@@ -51,10 +57,24 @@ export default function NavBar() {
         <Toolbar style={{backgroundColor: '#87CEEB'}}>
           <Typography
             variant="h6"
-            className={classes.title}
+            style={{marginRight: '40px'}}
             onClick={handleTitleClick}
           >
-            Dental Platform
+            {["Dental Platform","Стоматологическая платформа","Cтоматологічна платформа"][context.languageCode]}
+          </Typography>
+          <Typography
+            variant="h6"
+            style={{marginRight: '20px'}}
+            onClick={handleClinicsClick}
+          >
+            {["Clinics","Стоматологии","Клiнiки"][context.languageCode]}
+          </Typography>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            onClick={handleDentistsClick}
+          >
+            {["Dentists","Стоматологи","Стоматологи"][context.languageCode]}
           </Typography>
           {currentUser && (
             <Typography
