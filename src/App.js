@@ -11,6 +11,7 @@ import Dentists from "./components/Dentists";
 import Clinics from "./components/Clinics";
 import Appointment from "./components/Appointment";
 import Appointments from "./components/Appointments";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <PrivateRoute path='/account' component={Account}/>
           <PrivateRoute path='/appointments' component={Appointments}/>
         </Switch>
+        <Footer/>
       </AuthProvider>
     </Router>
   );

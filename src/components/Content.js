@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   bg: {
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
-    height: "100vh",
   },
 }));
 
@@ -34,7 +33,7 @@ export default function Content() {
   const classes = useStyles();
 
   return (
-    <CardMedia image={Bg} className={classes.bg}>
+    <CardMedia image={Bg} className={classes.bg} style={{minHeight: '100vh'}}>
       <Container maxWidth="lg" className={classes.content}>
         <CssBaseline />
         <div className={classes.paper}>

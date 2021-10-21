@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 0 auto",
   },
   cover: {
+    minWidth: 200,
     height: 200,
     width: 200,
     backgroundSize: "contain",
@@ -49,6 +50,15 @@ export default function Clinic({ clinic }) {
     context.selectClinic(clinic);
     history.push("/dentists");
   }
+  function getClinicInfo(clinicId) {
+    const info = context.clinicInformations.find(
+      (cl) => cl.clinicId === clinic.id
+    );
+    console.log(info);
+    return info[
+      ["description", "descriptionRu", "descriptionUa"][context.languageCode]
+    ];
+  }
   return (
     <Grid
       item
@@ -64,17 +74,22 @@ export default function Clinic({ clinic }) {
         <CardMedia
           className={classes.cover}
           image={clinic.image ? clinic.image : "/cl_anon.jpg"}
+          style={{margin: '10px'}}
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              {clinic.title}
+              {clinic[["title", "titleRu", "titleUa"][context.languageCode]]}
+            </Typography>
+            <Typography variant="body2" gutterBottom >
+              {getClinicInfo(clinic.id)}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {clinic.district}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {clinic.address}
+              {
+                clinic[
+                  ["address", "addressRu", "addressUa"][context.languageCode]
+                ]
+              }
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
               {clinic.phone}
