@@ -100,7 +100,7 @@ export default function SearchBoxToolBar() {
             </Grid>
             <Grid item xs={12} sm={12} md={2} lg={2}>
                 <FormControl className={classes.width}>
-                    <Button variant="contained" color="primary" onClick={handleSearchClick}>{["Search","Поиск","Пошук"][context.languageCode]}</Button>
+                    <Button variant="contained" style={{backgroundColor: '#87CEEB'}} onClick={handleSearchClick}>{["Search","Поиск","Пошук"][context.languageCode]}</Button>
                 </FormControl>
             </Grid>
         </Grid>
