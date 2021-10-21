@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import SearchBoxToolBar from "./SearchBoxToolBar";
+import DcContext from "../contexts/dc-context";
 
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -23,11 +24,12 @@ const useStyles = makeStyles((theme) => ({
   bg: {
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
-    height: '100vh',
+    height: "100vh",
   },
 }));
 
 export default function Content() {
+  const context = useContext(DcContext);
   //M-UI single line
   const classes = useStyles();
 
@@ -37,10 +39,10 @@ export default function Content() {
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h3">
-            Find dentist or clinic online
+            {["Find dentist or clinic online","Найдите стоматолога или клинику онлайн","Знайдіть стоматолога або клініку в Інтернеті"][context.languageCode]}
           </Typography>
           <Typography component="p" variant="subtitle1" color="textSecondary">
-            make an appointment at a convenient time
+            {["make an appointment at a convenient time","записаться на прием в удобное время","записатися на прийом у зручний час"][context.languageCode]}
           </Typography>
           <SearchBoxToolBar />
           <ContentCards />
