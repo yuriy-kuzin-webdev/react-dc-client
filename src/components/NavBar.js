@@ -54,27 +54,33 @@ export default function NavBar() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar style={{backgroundColor: '#87CEEB'}}>
+        <Toolbar style={{ backgroundColor: "#87CEEB" }}>
           <Typography
             variant="h6"
-            style={{marginRight: '40px'}}
+            style={{ marginRight: "40px", cursor: "pointer" }}
             onClick={handleTitleClick}
           >
-            {["Dental Platform","Стоматологическая платформа","Cтоматологічна платформа"][context.languageCode]}
+            {
+              [
+                "Dental Platform",
+                "Стоматологическая платформа",
+                "Cтоматологічна платформа",
+              ][context.languageCode]
+            }
           </Typography>
           <Typography
             variant="h6"
-            style={{marginRight: '20px'}}
+            style={{ marginRight: "20px", cursor: "pointer" }}
             onClick={handleClinicsClick}
           >
-            {["Clinics","Стоматологии","Клiнiки"][context.languageCode]}
+            {["Clinics", "Стоматологии", "Клiнiки"][context.languageCode]}
           </Typography>
           <Typography
             variant="h6"
             className={classes.title}
             onClick={handleDentistsClick}
           >
-            {["Dentists","Стоматологи","Стоматологи"][context.languageCode]}
+            {["Dentists", "Стоматологи", "Стоматологи"][context.languageCode]}
           </Typography>
           {currentUser && (
             <Typography

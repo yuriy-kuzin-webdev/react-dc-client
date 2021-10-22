@@ -49,10 +49,20 @@ export default function Footer() {
               </Box>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Box borderBottom={1}>{["Account","Аккаунт","Запис"][context.languageCode]}</Box>
+              <Box borderBottom={1}>{["Language","Язык","Мова"][context.languageCode]}</Box>
               <Box>
                 <Link href="/" color="inherit">
-                {["Forgot account","Забыл аккаунт","Забув аккаунт"][context.languageCode]}
+                {["English","Английский","Англiйська"][context.languageCode]}
+                </Link>
+              </Box>
+              <Box>
+                <Link href="/" color="inherit">
+                {["Russian","Российский","Росiйcька"][context.languageCode]}
+                </Link>
+              </Box>
+              <Box>
+                <Link href="/" color="inherit">
+                {["Ukrainian","Украинский","Українська "][context.languageCode]}
                 </Link>
               </Box>
             </Grid>
