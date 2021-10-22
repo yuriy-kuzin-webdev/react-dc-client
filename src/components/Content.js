@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ContentCards from "./ContentCards";
 import { CardMedia } from "@material-ui/core";
 import Bg from "../img/bg.jpg";
+import Helper from "./Helper";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -45,6 +46,7 @@ export default function Content() {
           </Typography>
           <SearchBoxToolBar />
           <ContentCards />
+          <Helper/>
         </div>
       </Container>
     </CardMedia>
