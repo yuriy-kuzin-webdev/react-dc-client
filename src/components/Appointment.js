@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { CardMedia } from "@material-ui/core";
 import Bg from "../img/bg.jpg";
 import Review from "./Review";
+import ReviewForm from "./ReviewForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +57,37 @@ export default function Appointment() {
 
   const user =
     currentUser && context.clients.find((c) => c.email === currentUser.email);
+
+  function canUserCreatePost() {
+    if (user && context.selectedDentist) {
+      const currentDentistReviews = context.dentistReviews.filter(
+        (review) => review.dentistId === context.selectedDentist.id
+      );
+      return !currentDentistReviews.some(
+        (review) => review.clientId === user.id
+      );
+    } else {
+      return false;
+    }
+  }
+
+  function handleCreatePost(review) {
+    context.addDentistReview({
+      ...review,
+      clientId: user.id,
+      dentistId: context.selectedDentist.id,
+    });
+  }
+  function handleEditPost(review) {
+    context.updDentistReview({
+      ...review,
+      clientId: user.id,
+      dentistId: context.selectedDentist.id,
+    });
+  }
+  function handleDeletePost(review) {
+    context.delDentistReview(review.id);
+  }
 
   function handleAppointmentClick() {
     setIsAppointmentsShow(true);
@@ -126,7 +158,10 @@ export default function Appointment() {
                   variant="contained"
                   color="primary"
                 >
-                  {day.toLocaleDateString(dateLocales[context.languageCode], options)}
+                  {day.toLocaleDateString(
+                    dateLocales[context.languageCode],
+                    options
+                  )}
                 </Button>
               </Grid>
             );
@@ -181,8 +216,18 @@ export default function Appointment() {
           {context.dentistReviews
             .filter((review) => review.dentistId === context.selectedDentist.id)
             .map((rev) => {
-              return <Review key={rev.id} review={rev} dentist />;
+              return (
+                <Review
+                  key={rev.id}
+                  review={rev}
+                  onEdit={handleEditPost}
+                  onDelete={handleDeletePost}
+                />
+              );
             })}
+          {!isAppointmentsShow && canUserCreatePost() && (
+            <ReviewForm onPost={handleCreatePost} />
+          )}
         </Grid>
       </Box>
     );

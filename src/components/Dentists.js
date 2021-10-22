@@ -9,7 +9,7 @@ import Bg from "../img/bg.jpg";
 import DcContext from "../contexts/dc-context";
 import Review from "./Review";
 import { useAuth } from "../contexts/AuthContext";
-
+import ReviewForm from "./ReviewForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,15 +27,35 @@ export default function Dentists() {
   const context = useContext(DcContext);
   const [isDentistsShow, setIsDentistsShow] = useState(true);
   const { currentUser } = useAuth();
-
-  const user = currentUser && context.clients.find((c) => c.email === currentUser.email);
-
+  const user =
+    currentUser && context.clients.find((c) => c.email === currentUser.email);
+  function canUserCreatePost() {
+    if (user && context.selectedClinic) {
+      const currentClinicReviews = context.clinicReviews.filter(
+        (review) => review.clinicId === context.selectedClinic.id
+      );
+      return !currentClinicReviews.some(
+        (review) => review.clientId === user.id
+      );
+    } else {
+      return false;
+    }
+  }
   function dentistClickHandler() {
     setIsDentistsShow(true);
   }
 
   function reviewsClickHandler() {
     setIsDentistsShow(false);
+  }
+  function handleCreatePost(review) {
+    context.addClinicReview({...review,clientId : user.id, clinicId: context.selectedClinic.id});
+  }
+  function handleEditPost(review) {
+    context.updClinicReview({...review, clientId : user.id, clinicId : context.selectedClinic.id});
+  }
+  function handleDeletePost(review) {
+    context.delClinicReview(review.id)
   }
 
   return (
@@ -91,8 +111,9 @@ export default function Dentists() {
                     (review) => review.clinicId === context.selectedClinic.id
                   )
                   .map((rev) => {
-                    return <Review key={rev.id} review={rev} />;
+                    return <Review key={rev.id} review={rev} onEdit={handleEditPost} onDelete={handleDeletePost}/>;
                   })}
+                  {!isDentistsShow && canUserCreatePost() && <ReviewForm onPost={handleCreatePost}/>}
           </Grid>
         </Box>
       </div>

@@ -1,7 +1,7 @@
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import DcContext from "../contexts/dc-context";
 import FormControl from "@material-ui/core/FormControl";
 import { useAuth } from "../contexts/AuthContext";
+import ReviewForm from "./ReviewForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,17 +42,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review({ review, dentist }) {
+export default function Review({ review, onEdit, onDelete }) {
   const context = useContext(DcContext);
   const { currentUser } = useAuth();
-  const user = currentUser && context.clients.find((c) => c.email === currentUser.email);
+  const user =
+    currentUser && context.clients.find((c) => c.email === currentUser.email);
   const isOwner = user && user.id === review.clientId;
 
   const classes = useStyles();
+  const [isEdit, setIsEdit] = useState(false);
   function getPostOwner(id) {
     return context.clients.find((client) => client.id === id).name;
   }
-  return (
+  function onEditHandler() {
+    setIsEdit(true);
+  }
+  function onDeleteHandler() {
+    onDelete(review);
+  }
+  function handleEditPost(review) {
+    setIsEdit(false);
+    onEdit(review);
+  }
+  return isEdit ? (
+    <ReviewForm onPost={handleEditPost} review={review}/>
+  ) : (
     <Grid
       item
       xs={10}
@@ -82,8 +97,13 @@ export default function Review({ review, dentist }) {
                 <Grid>
                   <FormControl className={classes.width}>
                     <Button
+                      onClick={onEditHandler}
                       variant="contained"
-                      style={{ backgroundColor: "#87CEEB", height: "20px", margin: '5px' }}
+                      style={{
+                        backgroundColor: "#87CEEB",
+                        height: "20px",
+                        margin: "5px",
+                      }}
                     >
                       {
                         ["Edit", "Редактировать", "Редагувати"][
@@ -96,8 +116,13 @@ export default function Review({ review, dentist }) {
                 <Grid>
                   <FormControl className={classes.width}>
                     <Button
+                      onClick={onDeleteHandler}
                       variant="contained"
-                      style={{ backgroundColor: "#87CEEB", height: "20px", margin: '5px' }}
+                      style={{
+                        backgroundColor: "#87CEEB",
+                        height: "20px",
+                        margin: "5px",
+                      }}
                     >
                       {["Delete", "Удалить", "Видалити"][context.languageCode]}
                     </Button>
