@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dentist({ dentist, withButtons, onAppointmentClick, onReviewsClick }) {
+
   const context = useContext(DcContext);
   const classes = useStyles();
   const history = useHistory();
@@ -51,17 +52,33 @@ export default function Dentist({ dentist, withButtons, onAppointmentClick, onRe
     history.replace("/appointment");
   }
   function getDentistInfo(dentistId) {
-    const info = context.dentistInformations.find(
-      (dent) => dent.dentistId === dentist.id
-    );
-    return info[
-      ["description", "descriptionRu", "descriptionUa"][context.languageCode]
-    ];
+    try {
+      const info = context.dentistInformations.find(
+        (dent) => dent.dentistId === dentist.id
+      );
+      return info[
+        ["description", "descriptionRu", "descriptionUa"][context.languageCode]
+      ];
+    } catch (error) {
+      history.replace("/");
+    }
   }
   function getClinicName() {
-    const clinic = context.clinics.find(c => c.id === dentist.clinicId);
-    return clinic[["title","titleRu","titleUa"][context.languageCode]];
+    try {
+      const clinic = context.clinics.find(c => c.id === dentist.clinicId);
+      return clinic[["title","titleRu","titleUa"][context.languageCode]];
+    } catch (error) {
+      history.replace("/");
+    } 
   }
+  function getDentistType() {
+    try {
+      return [["Dentist","Стоматолог","Стоматолог"],["Surgeon","Хирург","Хiрург"]][dentist.type - 1][context.languageCode]  
+    } catch (error) {
+      history.replace("/");
+    } 
+  }
+  while(!dentist){}
   return (
     <Grid
       item
@@ -82,7 +99,7 @@ export default function Dentist({ dentist, withButtons, onAppointmentClick, onRe
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography variant="subtitle1" color="textSecondary">
-              {[["Dentist","Стоматолог","Стоматолог"],["Surgeon","Хирург","Хiрург"]][dentist.type - 1][context.languageCode]}
+              {getDentistType()}
             </Typography>
             <Typography component="h5" variant="h5">
               {dentist[["name","nameRu","nameUa"][context.languageCode]]}

@@ -25,14 +25,27 @@ const useStyles = makeStyles((theme) => ({
     backgroundAttachment: "fixed",
   },
 }));
+const dateLocales = ["en-Us", "ru-Ru", "uk-UA"];
 const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
+  [
+    "Воскресенье",
+    "Понедельник",
+    "Вторник",
+    "Среда",
+    "Четверг",
+    "Пятница",
+    "Суббота",
+  ],
+  ["Неділя", "Понеділок", "вівторок", "Середа", "Четвер", "П'ятниця", "Субота"],
 ];
 const options = { year: "numeric", month: "long", day: "numeric" };
 
@@ -113,7 +126,7 @@ export default function Appointment() {
                   variant="contained"
                   color="primary"
                 >
-                  {day.toLocaleDateString("en-US", options)}
+                  {day.toLocaleDateString(dateLocales[context.languageCode], options)}
                 </Button>
               </Grid>
             );
@@ -140,7 +153,9 @@ export default function Appointment() {
                   xs={1}
                   key={"h" + day.toLocaleDateString("en-US", options)}
                 >
-                  <Paper className={classes.paper}>{days[day.getDay()]}</Paper>
+                  <Paper className={classes.paper}>
+                    {days[context.languageCode][day.getDay()]}
+                  </Paper>
                 </Grid>
               );
             })}

@@ -16,7 +16,7 @@ import BlockIcon from "@material-ui/icons/Block";
 import IconButton from "@material-ui/core/IconButton";
 import { CardMedia } from "@material-ui/core";
 import Bg from "../img/bg.jpg";
-
+const dateLocales = ["en-Us", "ru-Ru", "uk-UA"];
 const useStyles = makeStyles((theme) => ({
   tableCenter: {
     width: "75%",
@@ -106,7 +106,7 @@ export default function Appointments() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {new Date(row.date).toLocaleDateString("en-Us", {
+                    {new Date(row.date).toLocaleDateString(dateLocales[context.languageCode], {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
