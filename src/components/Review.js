@@ -56,8 +56,8 @@ export default function Review({ review }) {
       item
       xs={10}
       sm={10}
-      md={8}
-      lg={8}
+      md={7}
+      lg={7}
       component={Box}
       m={2}
       className={classes.root}
@@ -83,7 +83,7 @@ export default function Review({ review }) {
                   <FormControl className={classes.width}>
                     <Button
                       variant="contained"
-                      style={{ backgroundColor: "#87CEEB", height: "20px" }}
+                      style={{ backgroundColor: "#87CEEB", height: "20px", margin: '5px' }}
                     >
                       {
                         ["Edit", "Редактировать", "Редагувати"][
@@ -97,7 +97,7 @@ export default function Review({ review }) {
                   <FormControl className={classes.width}>
                     <Button
                       variant="contained"
-                      style={{ backgroundColor: "#87CEEB", height: "20px" }}
+                      style={{ backgroundColor: "#87CEEB", height: "20px", margin: '5px' }}
                     >
                       {["Delete", "Удалить", "Видалити"][context.languageCode]}
                     </Button>

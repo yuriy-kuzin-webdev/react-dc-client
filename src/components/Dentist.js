@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     width: "100%",
+    cursor: "pointer",
   },
   details: {
     display: "flex",
@@ -23,8 +24,10 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 0 auto",
   },
   cover: {
-    width: 200,
+    minWidth: 200,
     height: 200,
+    width: 200,
+    backgroundSize: "contain",
   },
   controls: {
     display: "flex",
@@ -46,6 +49,18 @@ export default function Dentist({ dentist }) {
     context.selectDentist(dentist)
     history.replace("/appointment");
   }
+  function getDentistInfo(dentistId) {
+    const info = context.dentistInformations.find(
+      (dent) => dent.dentistId === dentist.id
+    );
+    return info[
+      ["description", "descriptionRu", "descriptionUa"][context.languageCode]
+    ];
+  }
+  function getClinicName() {
+    const clinic = context.clinics.find(c => c.id === dentist.clinicId);
+    return clinic[["title","titleRu","titleUa"][context.languageCode]];
+  }
   return (
     <Grid
       item
@@ -57,29 +72,32 @@ export default function Dentist({ dentist }) {
       m={2}
       className={classes.root}
     >
-      <Card className={classes.root}>
-        <CardMedia
+      <Card className={classes.root} onClick={handleDentistClick}>
+      <CardMedia
           className={classes.cover}
-          image="/de_anon.jpg"
-          title="Live from space album cover"
+          image={dentist.image ? dentist.image : "/de_anon.jpg"}
+          style={{ margin: "10px" }}
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography variant="subtitle1" color="textSecondary">
-              {dentist.type}
+              {[["Dentist","Стоматолог","Стоматолог"],["Surgeon","Хирург","Хiрург"]][dentist.type - 1][context.languageCode]}
             </Typography>
             <Typography component="h5" variant="h5">
-              {dentist.name}
+              {dentist[["name","nameRu","nameUa"][context.languageCode]]}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {dentist.clinicName}
+              {getClinicName()}
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              {getDentistInfo(dentist.id)}
             </Typography>
           </CardContent>
           <div className={classes.controls}>
             <Button
               size="small"
               color="primary"
-              onClick={handleDentistClick}
+              
             >
               Make an appointment
             </Button>
