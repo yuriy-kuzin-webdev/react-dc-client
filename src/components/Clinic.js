@@ -104,18 +104,18 @@ export default function Clinic({
           {withButtons && (
             <div className={classes.controls}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={2} lg={2}>
+                <Grid item >
                   <FormControl className={classes.width}>
                     <Button
                       variant="contained"
-                      style={{ backgroundColor: "#87CEEB", height: '20px' }}
+                      style={{ backgroundColor: "#87CEEB", height: '20px', flexGrow: 1 }}
                       onClick={onDentistClick}
                     >
                       {["Dentists", "Стоматологи", "Стоматологи"][context.languageCode]}
                     </Button>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={12} md={2} lg={2}>
+                <Grid item >
                   <FormControl className={classes.width}>
                     <Button
                       variant="contained"

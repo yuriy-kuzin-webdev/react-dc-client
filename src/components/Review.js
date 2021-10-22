@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review({ review }) {
+export default function Review({ review, dentist }) {
   const context = useContext(DcContext);
   const { currentUser } = useAuth();
   const user = currentUser && context.clients.find((c) => c.email === currentUser.email);

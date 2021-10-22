@@ -8,6 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
 import DcContext from "../contexts/dc-context";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   controls: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     paddingLeft: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dentist({ dentist }) {
+export default function Dentist({ dentist, withButtons, onAppointmentClick, onReviewsClick }) {
   const context = useContext(DcContext);
   const classes = useStyles();
   const history = useHistory();
@@ -93,15 +94,34 @@ export default function Dentist({ dentist }) {
               {getDentistInfo(dentist.id)}
             </Typography>
           </CardContent>
-          <div className={classes.controls}>
-            <Button
-              size="small"
-              color="primary"
-              
-            >
-              Make an appointment
-            </Button>
-          </div>
+          {withButtons && (
+            <div className={classes.controls}>
+              <Grid container spacing={2}>
+                <Grid item >
+                  <FormControl className={classes.width}>
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#87CEEB", height: '20px', flexGrow: 1 }}
+                      onClick={onAppointmentClick}
+                    >
+                      {["Appointment", "Запись", "Записатися"][context.languageCode]}
+                    </Button>
+                  </FormControl>
+                </Grid>
+                <Grid item >
+                  <FormControl className={classes.width}>
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#87CEEB", height: '20px'}}
+                      onClick={onReviewsClick}
+                    >
+                      {["Reviews", "Отзывы", "Вiдгуки"][context.languageCode]}
+                    </Button>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </div>
+          )}
         </div>
       </Card>
     </Grid>
