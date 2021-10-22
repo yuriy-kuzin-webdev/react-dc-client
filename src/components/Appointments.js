@@ -14,11 +14,17 @@ import { useHistory } from "react-router-dom";
 import RestoreIcon from "@material-ui/icons/Restore";
 import BlockIcon from "@material-ui/icons/Block";
 import IconButton from "@material-ui/core/IconButton";
+import { CardMedia } from "@material-ui/core";
+import Bg from "../img/bg.jpg";
 
 const useStyles = makeStyles((theme) => ({
   tableCenter: {
     width: "75%",
     margin: "20px auto",
+  },
+  bg: {
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
   },
 }));
 
@@ -58,7 +64,8 @@ export default function Appointments() {
     context.updAppointment({...row, status:2})
   }
   return (
-    <TableContainer component={Paper} className={classes.tableCenter}>
+    <CardMedia image={Bg} className={classes.bg} style={{minHeight: '100vh', paddingTop: '20px'}}>
+    <TableContainer component={Paper} className={classes.tableCenter }>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -116,5 +123,6 @@ export default function Appointments() {
         </TableBody>
       </Table>
     </TableContainer>
+    </CardMedia>
   );
 }
