@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 
 import DcContext from "../contexts/dc-context";
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     width: "100%",
+    cursor: "pointer",
   },
   details: {
     display: "flex",
@@ -25,13 +27,14 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 0 auto",
   },
   cover: {
+    minWidth: 200,
     height: 200,
     width: 200,
     backgroundSize: "contain",
   },
   controls: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     paddingLeft: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
@@ -41,13 +44,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Clinic({ clinic }) {
+export default function Clinic({
+  clinic,
+  withButtons,
+  onDentistClick,
+  onReviewsClick,
+}) {
   const context = useContext(DcContext);
   const classes = useStyles();
   const history = useHistory();
   function handleClinicClick() {
     context.selectClinic(clinic);
     history.push("/dentists");
+  }
+  function getClinicInfo(clinicId) {
+    const info = context.clinicInformations.find(
+      (cl) => cl.clinicId === clinic.id
+    );
+    return info[
+      ["description", "descriptionRu", "descriptionUa"][context.languageCode]
+    ];
   }
   return (
     <Grid
@@ -60,31 +76,59 @@ export default function Clinic({ clinic }) {
       m={2}
       className={classes.root}
     >
-      <Card className={classes.root}>
+      <Card className={classes.root} onClick={handleClinicClick}>
         <CardMedia
           className={classes.cover}
           image={clinic.image ? clinic.image : "/cl_anon.jpg"}
+          style={{ margin: "10px" }}
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              {clinic.title}
+              {clinic[["title", "titleRu", "titleUa"][context.languageCode]]}
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              {getClinicInfo(clinic.id)}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {clinic.district}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {clinic.address}
+              {
+                clinic[
+                  ["address", "addressRu", "addressUa"][context.languageCode]
+                ]
+              }
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
               {clinic.phone}
             </Typography>
           </CardContent>
-          <div className={classes.controls}>
-            <Button size="small" color="primary" onClick={handleClinicClick}>
-              Make an appointment
-            </Button>
-          </div>
+          {withButtons && (
+            <div className={classes.controls}>
+              <Grid container spacing={2}>
+                <Grid item >
+                  <FormControl className={classes.width}>
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#87CEEB", height: '20px', flexGrow: 1 }}
+                      onClick={onDentistClick}
+                    >
+                      {["Dentists", "Стоматологи", "Стоматологи"][context.languageCode]}
+                    </Button>
+                  </FormControl>
+                </Grid>
+                <Grid item >
+                  <FormControl className={classes.width}>
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#87CEEB", height: '20px' }}
+                      onClick={onReviewsClick}
+                    >
+                      {["Reviews", "Отзывы", "Вiдгуки"][context.languageCode]}
+                    </Button>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </div>
+          )}
         </div>
       </Card>
     </Grid>
